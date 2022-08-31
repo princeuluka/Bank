@@ -13,27 +13,18 @@ namespace DataAccess.Entities
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-
         public DateTime DateOfBirth { get; set; }
-
-        public int StateOfResidenceID { get; set; }
-        [ForeignKey("StateOfResidenceID")]
-        public State StateOfResidence { get; set; }
-
+        public string StateOfResidenceID { get; set; }
         public int LgaOfResidenceID { get; set; }
-        [ForeignKey("LgaOfResidenceID")]
-        public LGA LgaOfResidence { get; set; }
-
         public string Adress { get; set; }
 
-        public int StateOfOriginID { get; set; }
-        [ForeignKey("StateOfOriginID")]
-        public State StateOfOrigin { get; set; }
+        [ForeignKey("StateID")]
+        public int StateID { get; set; }
+        public State State { get; set; }
 
-        public int LgaOfOriginID { get; set; }
-
-        [ForeignKey("LgaOfOriginID")]
-        public LGA LgaOfOrigin { get; set; }
+        [ForeignKey("LgaID")]
+        public int LgaID { get; set; }
+        public LGA Lga { get; set; }
 
 
 

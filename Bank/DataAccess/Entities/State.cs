@@ -8,7 +8,7 @@ namespace DataAccess.Entities
 {
     public class State
     {
-        public int ID { get; set; }
+        public int StateID { get; set; }
         public string Name { get; set; }
     }
 }
