@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace DataAccess.Entities.Enums
 {
-    public class State
+    public enum AccountType
     {
+        Savings,
+        Current
     }
 }
