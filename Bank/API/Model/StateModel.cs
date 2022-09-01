@@ -2,7 +2,7 @@
 {
     public class StateModel
     {
-        public int ID { get; set; }
+        public int StateID { get; set; }
         public string Name { get; set; }
     }
 }

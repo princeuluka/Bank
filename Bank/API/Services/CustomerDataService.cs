@@ -23,9 +23,9 @@ namespace API.Services
                                 FirstName = Customer.FirstName,
                                 MiddleName = Customer.MiddleName,
                                 LastName = Customer.LastName,
-                                LgaOfOriginID = Customer.LgaID,
+                                LgaID = Customer.LgaID,
                                 LgaOfResidenceID = Customer.LgaOfResidenceID,
-                                StateOfOriginID =Customer.StateID,
+                                 StateID=Customer.StateID,
                                 StateOfResidenceID = Customer.StateOfResidenceID
                               }).ToListAsync();
             return data;

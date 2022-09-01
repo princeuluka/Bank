@@ -9,18 +9,17 @@ namespace API.Model
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string StateOfResidenceID { get; set; }
+        public int StateOfResidenceID { get; set; }
         public int LgaOfResidenceID { get; set; }
         public string Adress { get; set; }
 
-        [ForeignKey("StateOfOriginID")]
-        public int StateOfOriginID { get; set; }
-        public StateModel StateOfOrigin { get; set; }
+        [ForeignKey("StateID")]
+        public int StateID { get; set; }
+        public StateModel State { get; set; }
 
-        [ForeignKey("LgaOfOriginID")]
-        public int LgaOfOriginID { get; set; }
-        public LGAModel LgaOfOrigin { get; set; }
-
+        [ForeignKey("LgaID")]
+        public int LgaID { get; set; }
+        public LGAModel Lga { get; set; }
 
     }
 }

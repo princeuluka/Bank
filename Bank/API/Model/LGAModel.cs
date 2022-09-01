@@ -4,7 +4,7 @@ namespace API.Model
 {
     public class LGAModel
     {
-        public int ID { get; set; }
+        public int LgaID { get; set; }
         public string Name { get; set; }
 
         public int StateID { get; set; }
