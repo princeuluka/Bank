@@ -39,7 +39,7 @@ namespace DataAccess.Migrations
                         column: x => x.StateID,
                         principalTable: "States",
                         principalColumn: "StateID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,13 +66,13 @@ namespace DataAccess.Migrations
                         column: x => x.LgaID,
                         principalTable: "LGAs",
                         principalColumn: "LgaID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Customers_States_StateID",
                         column: x => x.StateID,
                         principalTable: "States",
                         principalColumn: "StateID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

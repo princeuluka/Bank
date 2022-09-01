@@ -15,8 +15,6 @@ namespace DataAccess.Data
             
         }
 
-
-
         public DbSet<CustomerData> Customers { get; set; }
         public DbSet<LGA> LGAs { get; set; }
         public DbSet<State> States { get; set; }
