@@ -133,5 +133,24 @@ namespace API.Services
                 return true;
             }     
         }
+
+        public async Task<CustomerAccountModel> GetCustomerDataByAccountNo(long actNo)
+        {
+            var Data = await dbContext.Accounts
+                .Include(c => c.Customer)
+                .FirstOrDefaultAsync(n => n.AccountNumber == actNo);
+
+            var data1 = new CustomerAccountModel()
+            {
+                AccountNumber = Data.AccountNumber,
+                AccountType = (Model.Enums.AccountType)Data.AccountType,
+                AvailableBalance = Data.AvailableBalance,
+                //Customer = Data.Customer,
+                CustomerID = Data.CustomerID
+
+            };
+
+            return data1;
+        }
     }
 }

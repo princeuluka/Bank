@@ -16,5 +16,7 @@ namespace API.Model
         public AccountType AccountType { get; set; }
 
         public long AccountNumber { get; set; }
+
+        //public static implicit operator CustomerAccountModel(CustomerAccountModel v) => throw new NotImplementedException();
     }
 }

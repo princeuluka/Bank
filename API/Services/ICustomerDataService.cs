@@ -10,6 +10,8 @@ namespace API.Services
         Task AddNewAccountAsync(CustomerDataModel customer);
         Task UpdateAccountAsync(CustomerDataModel customer);
 
+        Task<CustomerAccountModel> GetCustomerDataByAccountNo(long actNo);
+
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using DataAccess.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Model
 {
@@ -21,5 +22,9 @@ namespace API.Model
         public int LgaID { get; set; }
         public LGAModel Lga { get; set; }
 
+        public static explicit operator CustomerDataModel(CustomerData v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
