@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+   
     [ApiController]
     public class CustomerDataController : ControllerBase
     {
@@ -13,14 +13,15 @@ namespace API.Controllers
         {
             this.customerDataService = customerDataService;
         }
-
+        [Route("api/CustomerData/AllCustomers")]
         [HttpGet]
         public async Task<IActionResult> AllCustomers()
         {
-            var data = await customerDataService.GetAllCustomers();
+            var data = await customerDataService.GetAllAsync(n => n.State, p => p.Lga);
             return Ok(data);
         }
 
+        [Route("api/CustomerData/AddNewCustomer")]
         [HttpPost]
         public async Task<IActionResult> AddNewCustomer(CustomerDataModel data)
         {
@@ -28,7 +29,8 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [Route("api/CustomerData/UpdateCustomer")]
+        [HttpPut]
         public async Task<IActionResult> UpdateCustomer(CustomerDataModel data)
         {
             await customerDataService.UpdateAccountAsync(data);

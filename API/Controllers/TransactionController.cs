@@ -16,11 +16,20 @@ namespace API.Controllers
             this.transactionService = transactionService;     
         }
 
+        [Route("api/CustomerData/NewTransaction")]
         [HttpPost]
         public async Task<IActionResult> NewTransaction(TransactionsModel data)
         {
-            await transactionService.NewTransaction(data);
-            return Ok();
+            var id = await transactionService.NewTransaction(data);
+            return Ok(id);
+        }
+
+        [Route("api/CustomerData/AllTransaction")]
+        [HttpGet]
+        public async Task<IActionResult> AllTransactions()
+        {
+            var data = await transactionService.GetAllTransactions();
+            return Ok(data);
         }
     }
 }

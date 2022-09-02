@@ -19,6 +19,7 @@ namespace DataAccess.Data
         public DbSet<LGA> LGAs { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<CustomerAccount> Accounts { get; set; }
+        public DbSet<Transactions> Transactions { get; set; }
 
        
 

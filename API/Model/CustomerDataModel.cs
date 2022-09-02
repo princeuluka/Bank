@@ -1,10 +1,13 @@
-﻿using DataAccess.Entities;
+﻿using API.Data.Base;
+using DataAccess.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Model
 {
-    public class CustomerDataModel
+    public class CustomerDataModel :IEntityBase
     {
+        [Key]
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -22,9 +25,5 @@ namespace API.Model
         public int LgaID { get; set; }
         public LGAModel Lga { get; set; }
 
-        public static explicit operator CustomerDataModel(CustomerData v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

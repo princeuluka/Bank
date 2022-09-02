@@ -1,4 +1,5 @@
-﻿using API.Model;
+﻿using API.Data.Base;
+using API.Model;
 using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Entities.Enums;
@@ -6,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
 {
-    public class CustomerDataService : ICustomerDataService
+    public class CustomerDataService : EntityBaseRepositoryy<CustomerDataModel>, ICustomerDataService
     {
         private readonly ApplicationDbContext dbContext;
 
-        public CustomerDataService(ApplicationDbContext dbContext)
+        public CustomerDataService(ApplicationDbContext dbContext): base(dbContext)
         {
             this.dbContext = dbContext;
         }

@@ -1,8 +1,10 @@
-﻿using API.Model;
+﻿using API.Data.Base;
+using API.Model;
+
 
 namespace API.Services
 {
-    public interface ICustomerDataService
+    public interface ICustomerDataService : IEntityBaseRepository<CustomerDataModel>
     {
         Task<List<CustomerDataModel>> GetAllCustomers();
         Task<List<StateModel>> GetAllStates();
