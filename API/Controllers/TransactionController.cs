@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService transactionService;
@@ -16,7 +15,7 @@ namespace API.Controllers
             this.transactionService = transactionService;     
         }
 
-        [Route("api/CustomerData/NewTransaction")]
+        [Route("api/Transactions/NewTransaction")]
         [HttpPost]
         public async Task<IActionResult> NewTransaction(TransactionsModel data)
         {
@@ -24,7 +23,7 @@ namespace API.Controllers
             return Ok(id);
         }
 
-        [Route("api/CustomerData/AllTransaction")]
+        [Route("api/Transactions/AllTransaction")]
         [HttpGet]
         public async Task<IActionResult> AllTransactions()
         {

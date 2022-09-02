@@ -1,4 +1,5 @@
-﻿using API.Model;
+﻿using API.Data;
+using API.Model;
 using DataAccess.Data;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -8,27 +9,35 @@ namespace API.Services
     public class TransactionService : ITransactionService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly TransactionDbContext _context;
         private readonly ICustomerDataService customerDataService;
-        public TransactionService(ApplicationDbContext dbContext, ICustomerDataService customerDataService)
+
+        public TransactionService(ApplicationDbContext dbContext, ICustomerDataService customerDataService, TransactionDbContext _context)
         {
             this.dbContext = dbContext;
             this.customerDataService = customerDataService;
+            this._context = _context;
         }
         public async Task<Guid> NewTransaction(TransactionsModel transaction)
         {
+            var senderActName = GetCustomerNameAsync(transaction.SenderAccountNumber).ToString();
+
+            var benefiActName = GetCustomerNameAsync(transaction.BeneficiaryAccountNumber).ToString();
+
+
             var tran = new Transactions()
             {
                 Amount = transaction.Amount,
                 BeneficiaryAccountNumber = transaction.BeneficiaryAccountNumber,
-                BeneficiaryAccountName = GetCustomerNameAsync(transaction.BeneficiaryAccountNumber).ToString(),
+                BeneficiaryAccountName =senderActName,
                 Narration = transaction.Narration,
-                TransactionDate = transaction.TransactionDate,
+                TransactionDate = DateTime.Now,
                 SenderAccountNumber = transaction.SenderAccountNumber,
-                SenderAccountName = GetCustomerNameAsync(transaction.SenderAccountNumber).ToString(),
+                SenderAccountName = benefiActName,
                 TransactionType = (DataAccess.Entities.Enums.TransactionType)transaction.TransactionType
             };
-            await dbContext.Transactions.AddAsync(tran);
-            await dbContext.SaveChangesAsync();
+            await _context.Transactions.AddAsync(tran);
+            await _context.SaveChangesAsync();
 
             return tran.TransactionID;
         }

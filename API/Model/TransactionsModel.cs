@@ -14,7 +14,7 @@ namespace API.Model
 
         public double Amount { get; set; }
 
-        public DateTime TransactionDate { get; set; }
+       public DateTime TransactionDate { get; set; }
 
         public string Narration { get; set; }
     }
