@@ -28,6 +28,6 @@ namespace DataAccess.Entities
 
         public string Narration { get; set; }
 
-
+       
     }
 }

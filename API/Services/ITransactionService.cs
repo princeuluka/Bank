@@ -7,5 +7,7 @@ namespace API.Services
         Task <Guid>NewTransaction(TransactionsModel transaction);
 
         Task<List<TransactionsModel>> GetAllTransactions();
+
+        Task<TransactionsModel> GetTransactionDataByID(Guid id);
     }
 }

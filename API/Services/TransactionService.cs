@@ -2,21 +2,22 @@
 using API.Model;
 using DataAccess.Data;
 using DataAccess.Entities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace API.Services
 {
     public class TransactionService : ITransactionService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly TransactionDbContext _context;
         private readonly ICustomerDataService customerDataService;
 
-        public TransactionService(ApplicationDbContext dbContext, ICustomerDataService customerDataService, TransactionDbContext _context)
+        public TransactionService(ApplicationDbContext dbContext, ICustomerDataService customerDataService)
         {
             this.dbContext = dbContext;
             this.customerDataService = customerDataService;
-            this._context = _context;
+          
         }
         public async Task<Guid> NewTransaction(TransactionsModel transaction)
         {
@@ -36,21 +37,45 @@ namespace API.Services
                 SenderAccountName = benefiActName,
                 TransactionType = (DataAccess.Entities.Enums.TransactionType)transaction.TransactionType
             };
-            await _context.Transactions.AddAsync(tran);
-            await _context.SaveChangesAsync();
+            await dbContext.Transactions.AddAsync(tran);
+            await dbContext.SaveChangesAsync();
 
             return tran.TransactionID;
         }
 
-        public async Task<string> GetCustomerNameAsync(long actNo)
+        public string GetCustomerNameAsync(long actNo)
         {
-            var data = await dbContext.Accounts
-                .Include(c => c.Customer)
-               .FirstOrDefaultAsync(n => n.AccountNumber == actNo);
+            var data = new List<CustomerData>();
+            var data2 = new List<CustomerAccount>();
+            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BankApplication;Integrated Security=True;Pooling=False");
+            var command = new SqlCommand();
+            command = new SqlCommand("GetCustomerDetails", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter param;
 
-            string cusName = data.Customer.FirstName + " " + data.Customer.MiddleName + " " + data.Customer.LastName;
+            param = command.Parameters.AddWithValue("@actNo", actNo);
+            conn.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            var result2 = new CustomerData();
 
-            return cusName;
+            if (reader.HasRows == true)
+            {
+                while (reader.Read())
+                {
+                    
+                    result2.FirstName = reader.GetString(0);
+                    result2.MiddleName = reader.GetString(1);
+                    result2.LastName = reader.GetString(2);
+                    data.Add(result2);
+                }
+                reader.Close();
+            }
+            else
+            {
+                return "No Matching Account Details.....";
+            }
+
+            return result2.FirstName + "" + result2.MiddleName+ "" + result2.LastName;
         }
 
         public async Task<List<TransactionsModel>> GetAllTransactions()
@@ -67,6 +92,25 @@ namespace API.Services
                                 TransactionType = (Model.Enums.TransactionType)Trans.TransactionType
                             }).ToListAsync();
             return data;
+        }
+
+        public async Task<TransactionsModel> GetTransactionDataByID(Guid id)
+        {
+            var Data = await dbContext.Transactions
+               .FirstOrDefaultAsync(n => n.TransactionID == id);
+
+            var result = new TransactionsModel()
+            {
+                Amount = Data.Amount,
+                BeneficiaryAccountNumber = Data.BeneficiaryAccountNumber,
+                Narration = Data.Narration,
+                SenderAccountNumber = Data.SenderAccountNumber,
+                TransactionDate = Data.TransactionDate,
+                TransactionType = (Model.Enums.TransactionType)Data.TransactionType,
+                TransactionID = Data.TransactionID
+            };
+
+            return result;
         }
     }
 }

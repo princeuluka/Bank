@@ -30,5 +30,14 @@ namespace API.Controllers
             var data = await transactionService.GetAllTransactions();
             return Ok(data);
         }
+
+        [Route("api/Transactions/GetTransactionByID")]
+        [HttpGet]
+        public async Task<IActionResult> GetTransactionById(Guid Id)
+        {
+            var data = await transactionService.GetTransactionDataByID(Id);
+            return Ok(data);
+
+        }
     }
 }
