@@ -17,7 +17,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> AllCustomers()
         {
-            var data = await customerDataService.GetAllAsync(n => n.State, p => p.Lga);
+            var data = await customerDataService.GetAllCustomers();
             return Ok(data);
         }
 

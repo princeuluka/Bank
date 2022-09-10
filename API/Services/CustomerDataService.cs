@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
 {
-    public class CustomerDataService : EntityBaseRepositoryy<CustomerDataModel>, ICustomerDataService
+    public class CustomerDataService : ICustomerDataService
     {
         private readonly ApplicationDbContext dbContext;
 
-        public CustomerDataService(ApplicationDbContext dbContext): base(dbContext)
+        public CustomerDataService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

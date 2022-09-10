@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Model
 {
-    public class CustomerDataModel :IEntityBase
+    public class CustomerDataModel 
     {
         [Key]
         public int ID { get; set; }

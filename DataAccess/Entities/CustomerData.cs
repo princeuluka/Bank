@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entities
 {
-    public class CustomerData
+    public class CustomerData 
     {
         public int ID { get; set; }
         public string FirstName { get; set; }
