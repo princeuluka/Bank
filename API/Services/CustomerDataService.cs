@@ -50,24 +50,10 @@ namespace API.Services
 
         public async Task<List<CustomerData>> GetAllCustomers()
         {
-            var all = await dbContext.Customers
+            var data = await dbContext.Customers
                 .Include(n => n.State).Include(m => m.Lga).ToListAsync();
 
-            //var data = await(from Customer in dbContext.Customers
-            //                 select new CustomerDataModel()
-            //                 {
-            //                     ID = Customer.ID,
-            //                     Adress = Customer.Adress,
-            //                     DateOfBirth = Customer.DateOfBirth,
-            //                     FirstName = Customer.FirstName,
-            //                     MiddleName = Customer.MiddleName,
-            //                     LastName = Customer.LastName,
-            //                     LgaID = Customer.LgaID,
-            //                     LgaOfResidenceID = Customer.LgaOfResidenceID,
-            //                     StateID = Customer.StateID,
-            //                     StateOfResidenceID = Customer.StateOfResidenceID
-            //                 }).Include(n => n.State).Include(m => m.Lga).Include(o => o.LgaOfResidenceID).ToListAsync();
-            return all;
+            return data;
         }
 
         public async Task<List<LGAModel>> GetAllLga()

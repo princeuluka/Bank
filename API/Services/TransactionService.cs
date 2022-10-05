@@ -21,66 +21,68 @@ namespace API.Services
         }
         public async Task<Guid> NewTransaction(TransactionsModel transaction)
         {
+
+           
             var senderActName = GetCustomerNameAsync(transaction.SenderAccountNumber).ToString();
 
             var benefiActName = GetCustomerNameAsync(transaction.BeneficiaryAccountNumber).ToString();
 
-
-            var tran = new Transactions()
+            if (benefiActName == "System.Threading.Tasks.Task`1[System.String]")
             {
-                Amount = transaction.Amount,
-                BeneficiaryAccountNumber = transaction.BeneficiaryAccountNumber,
-                BeneficiaryAccountName =senderActName,
-                Narration = transaction.Narration,
-                TransactionDate = DateTime.Now,
-                SenderAccountNumber = transaction.SenderAccountNumber,
-                SenderAccountName = benefiActName,
-                TransactionType = (DataAccess.Entities.Enums.TransactionType)transaction.TransactionType
-            };
-            await dbContext.Transactions.AddAsync(tran);
-            await dbContext.SaveChangesAsync();
-
-            return tran.TransactionID;
-        }
-
-        public string GetCustomerNameAsync(long actNo)
-        {
-            var data = new List<CustomerData>();
-            var data2 = new List<CustomerAccount>();
-            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BankApplication;Integrated Security=True;Pooling=False");
-            var command = new SqlCommand();
-            command = new SqlCommand("GetCustomerDetails", conn);
-            command.CommandType = CommandType.StoredProcedure;
-            SqlParameter param;
-
-            param = command.Parameters.AddWithValue("@actNo", actNo);
-            conn.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            var result2 = new CustomerData();
-
-            if (reader.HasRows == true)
+                return  Guid.Empty;
+            }
+            else if (senderActName == "System.Threading.Tasks.Task`1[System.String]")
             {
-                while (reader.Read())
-                {
-                    
-                    result2.FirstName = reader.GetString(0);
-                    result2.MiddleName = reader.GetString(1);
-                    result2.LastName = reader.GetString(2);
-                    data.Add(result2);
-                }
-                reader.Close();
+                return Guid.Empty;
+                
             }
             else
             {
+                var tran = new Transactions()
+                {
+                    Amount = transaction.Amount,
+                    BeneficiaryAccountNumber = transaction.BeneficiaryAccountNumber,
+                    BeneficiaryAccountName = senderActName,
+                    Narration = transaction.Narration,
+                    TransactionDate = DateTime.Now,
+                    SenderAccountNumber = transaction.SenderAccountNumber,
+                    SenderAccountName = benefiActName,
+                    TransactionType = (DataAccess.Entities.Enums.TransactionType)transaction.TransactionType
+                };
+                await dbContext.Transactions.AddAsync(tran);
+                await dbContext.SaveChangesAsync();
+
+                return tran.TransactionID;
+            }
+        }
+
+        public async Task<string> GetCustomerNameAsync(long actNo)
+        {
+            //CustomerAccount account = new CustomerAccount();
+          
+                var AccountData =  dbContext.Accounts.FirstOrDefault(n => n.AccountNumber == actNo);
+                if (AccountData != null)
+                {
+                var CusId = AccountData.CustomerID;
+
+                var Customer = dbContext.Customers.FirstOrDefault(n => n.ID == AccountData.CustomerID);
+
+                return Customer.LastName + " " + Customer.FirstName + " " + Customer.MiddleName;
+                 }
+            else
+            {
                 return "No Matching Account Details.....";
+
             }
 
-            return result2.FirstName + "" + result2.MiddleName+ "" + result2.LastName;
         }
 
         public async Task<List<TransactionsModel>> GetAllTransactions()
         {
-           var data = await(from Trans in dbContext.Transactions
+           // var data = await dbContext.Transactions.Include(n => n.).Include(m => m.Lga).ToListAsync();
+
+
+            var data = await(from Trans in dbContext.Transactions
                             select new TransactionsModel()
                             {
                                 Amount = Trans.Amount,
@@ -103,8 +105,10 @@ namespace API.Services
             {
                 Amount = Data.Amount,
                 BeneficiaryAccountNumber = Data.BeneficiaryAccountNumber,
+                BeneficiaryAccountName = Data.BeneficiaryAccountName,
                 Narration = Data.Narration,
                 SenderAccountNumber = Data.SenderAccountNumber,
+                SenderAccountName = Data.SenderAccountName,
                 TransactionDate = Data.TransactionDate,
                 TransactionType = (Model.Enums.TransactionType)Data.TransactionType,
                 TransactionID = Data.TransactionID

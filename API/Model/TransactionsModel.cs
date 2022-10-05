@@ -17,5 +17,7 @@ namespace API.Model
        public DateTime TransactionDate { get; set; }
 
         public string Narration { get; set; }
+        public string BeneficiaryAccountName { get; set; }
+        public string SenderAccountName { get; set; }
     }
 }

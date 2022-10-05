@@ -20,6 +20,10 @@ namespace API.Controllers
         public async Task<IActionResult> NewTransaction(TransactionsModel data)
         {
             var id = await transactionService.NewTransaction(data);
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
             return Ok(id);
         }
 
