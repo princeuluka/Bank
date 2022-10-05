@@ -61,3 +61,7 @@ C:\Users\P9380\source\repos\New\Bank\API\obj\Debug\net6.0\refint\API.dll
 C:\Users\P9380\source\repos\New\Bank\API\obj\Debug\net6.0\API.pdb
 C:\Users\P9380\source\repos\New\Bank\API\obj\Debug\net6.0\API.genruntimeconfig.cache
 C:\Users\P9380\source\repos\New\Bank\API\obj\Debug\net6.0\ref\API.dll
+C:\Users\P9380\source\repos\New\Bank\API\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\P9380\source\repos\New\Bank\API\bin\Debug\net6.0\System.Web.Http.dll
+C:\Users\P9380\source\repos\New\Bank\API\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\P9380\source\repos\New\Bank\API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

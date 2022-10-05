@@ -11,13 +11,13 @@ namespace API.Services
     public class TransactionService : ITransactionService
     {
         private readonly ApplicationDbContext dbContext;
+     
         private readonly ICustomerDataService customerDataService;
 
         public TransactionService(ApplicationDbContext dbContext, ICustomerDataService customerDataService)
         {
             this.dbContext = dbContext;
             this.customerDataService = customerDataService;
-          
         }
         public async Task<Guid> NewTransaction(TransactionsModel transaction)
         {
